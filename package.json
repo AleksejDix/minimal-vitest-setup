@@ -1,0 +1,22 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "main": "index.js",
+  "exports": "./dist/index.mjs",
+  "scripts": {
+    "start": "tsx ./index.ts",
+    "test": "vitest",
+    "build": "pkgroll",
+    "type-check": "tsc --noEmit"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "pkgroll": "^2.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
+  }
+}
