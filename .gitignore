@@ -14,12 +14,13 @@ lerna-debug.log*
 node_modules/
 jspm_packages/
 
-# Nuxt.js build / generate output
+# generate output
 .nuxt
 .next
 .vuepress/dist
 out
 dist
+coverage
 
 
 # Optional npm cache directory

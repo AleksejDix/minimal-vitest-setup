@@ -6,23 +6,23 @@ interface Assertions {
 }
 
 declare global {
-	var expect: (actual: unknown) => Assertions
-	var test: (title: string, callback: () => void | Promise<void>) => void
-	var beforeAll: (callback: () => void) => void
-	var afterAll: (callback: () => void) => void
+	var _expect: (actual: unknown) => Assertions
+	var _test: (title: string, callback: () => void | Promise<void>) => void
+	var _beforeAll: (callback: () => void) => void
+	var _afterAll: (callback: () => void) => void
 }
 
-globalThis.beforeAll = function (callback: () => void) {
+globalThis._beforeAll = function (callback: () => void) {
 	callback()
 }
 
-globalThis.afterAll = function (callback: () => void) {
+globalThis._afterAll = function (callback: () => void) {
 	process.on('beforeExit', () => {
 		callback()
 	})
 }
 
-globalThis.expect = function (actual: unknown) {
+globalThis._expect = function (actual: unknown) {
 	return {
 		toBe(expected: unknown) {
 			if (actual !== expected) {
@@ -40,10 +40,12 @@ globalThis.expect = function (actual: unknown) {
 						throw new Error(`Expected ${actual} to reject but it didn't`)
 					},
 					error => {
-						if (error.message !== expected.message) {
-							throw new Error(
-								`Expected ${error.message} to equal to ${expected.message}`,
-							)
+						if (error instanceof Error) {
+							if (error.message !== expected.message) {
+								throw new Error(
+									`Expected ${error.message} to equal to ${expected.message}`,
+								)
+							}
 						}
 					},
 				)
@@ -52,7 +54,7 @@ globalThis.expect = function (actual: unknown) {
 	}
 }
 
-globalThis.test = async function (title, callback) {
+globalThis._test = async function (title, callback) {
 	try {
 		await callback()
 		console.log(`✓ ${title}`)
