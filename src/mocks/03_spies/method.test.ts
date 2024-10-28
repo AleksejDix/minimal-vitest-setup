@@ -1,4 +1,4 @@
-import { random, double } from './spy'
+import { random, double } from './method'
 
 describe('mocking random', () => {
 	beforeEach(() => {
